@@ -21,8 +21,8 @@ CONFIG = {
 }
 
 unauthenticated_api = client.InstagramAPI(**CONFIG)
-#reactor = subscriptions.SubscriptionsReactor()
-#reactor.register_callback(subscriptions.SubscriptionType.TAG, process_tag_update)
+reactor = subscriptions.SubscriptionsReactor()
+reactor.register_callback(subscriptions.SubscriptionType.TAG, process_tag_update)
 
 @route('/')
 def user_likes():
