@@ -38,7 +38,7 @@ def home():
     if not code:
         return 'Missing code'
     try:
-        access_token = '3034913826.1677ed0.ad37bc63b4b145b3aea55b699d8885d2'
+        access_token = 3034913826.1677ed0.ad37bc63b4b145b3aea55b699d8885d2
 	#user_info = 
         if not access_token:
             return 'Could not get access token'
