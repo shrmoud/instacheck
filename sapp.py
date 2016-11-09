@@ -44,6 +44,7 @@ def user_likes():
         content += ''.join(photos)
     except Exception as e:
         print(e)
-    return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
+#    return True
+    #return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
 
 bottle.run(app=app, host='0.0.0.0', port=argv[1], reloader=True)
