@@ -25,23 +25,6 @@ reactor = subscriptions.SubscriptionsReactor()
 reactor.register_callback(subscriptions.SubscriptionType.TAG, process_tag_update)
 
 @route('/')
-def home():
-    try:
-        access_token = '3034913826.1677ed0.ad37bc63b4b145b3aea55b699d8885d2'
-        if not access_token:
-            return 'Could not get access token'
-        api = client.InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
-    except Exception as e:
-        print(e)
-  
-    nav_menu = ("<h1>Python Instagram</h1>"
-                "<ul>"
-                    "<li><a href='/liked'>User Liked Media</a> Get a list of a user's most recent liked media</li>"                   
-                "</ul>")
-    return nav_menu
-
-
-@route('/liked')
 def user_likes():
     content = "<h2>User Liked Media</h2>"
     access_token = '3034913826.1677ed0.ad37bc63b4b145b3aea55b699d8885d2'
