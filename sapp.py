@@ -17,7 +17,7 @@ app = beaker.middleware.SessionMiddleware(bottle.app(), session_opts)
 CONFIG = {
     'client_id': 'aa18575b408b4dbd9039319de55d0bed',
     'client_secret': '06a7bfba726941fc8dbec9ebff369958',
-    'redirect_uri': 'https://instaclient.herokuapp.com/oauth_callback'
+    'redirect_uri': 'https://instaclient.herokuapp.com/'
 }
 
 unauthenticated_api = client.InstagramAPI(**CONFIG)
