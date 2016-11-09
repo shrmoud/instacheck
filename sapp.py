@@ -21,33 +21,20 @@ CONFIG = {
 }
 
 unauthenticated_api = client.InstagramAPI(**CONFIG)
-
-@hook('before_request')
-def setup_request():
-    request.session = request.environ['beaker.session']
-
-def process_tag_update(update):
-    print(update)
-
 reactor = subscriptions.SubscriptionsReactor()
 reactor.register_callback(subscriptions.SubscriptionType.TAG, process_tag_update)
 
 @route('/')
 def home():
-    code = request.GET.get("code")
-    if not code:
-        return 'Missing code'
     try:
         access_token = '3034913826.1677ed0.ad37bc63b4b145b3aea55b699d8885d2'
-	#user_info = 
         if not access_token:
             return 'Could not get access token'
         api = client.InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
-        request.session['access_token'] = access_token
     except Exception as e:
         print(e)
   
-	nav_menu = ("<h1>Python Instagram</h1>"
+    nav_menu = ("<h1>Python Instagram</h1>"
                 "<ul>"
                     "<li><a href='/liked'>User Liked Media</a> Get a list of a user's most recent liked media</li>"                   
                 "</ul>")
@@ -80,23 +67,5 @@ def user_likes():
     except Exception as e:
         print(e)
     return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
-
-
-
-@route('/realtime_callback')
-@post('/realtime_callback')
-def on_realtime_callback():
-    mode = request.GET.get("hub.mode")
-    challenge = request.GET.get("hub.challenge")
-    verify_token = request.GET.get("hub.verify_token")
-    if challenge:
-        return challenge
-    else:
-        x_hub_signature = request.header.get('X-Hub-Signature')
-        raw_response = request.body.read()
-        try:
-            reactor.process(CONFIG['client_secret'], raw_response, x_hub_signature)
-        except subscriptions.SubscriptionVerifyError:
-            print("Signature mismatch")
 
 bottle.run(app=app, host='0.0.0.0', port=argv[1], reloader=True)
