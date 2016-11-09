@@ -32,20 +32,15 @@ def user_likes():
         return 'Missing Access Token'
     try:
         api = client.InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
-        media_feed, next = api.user_media_feed()
+        media_feed, next = api.user_liked_feed()
         photos = []
-        for media in media_feed:
-            photos.append('<img src="%s"/>' % media.get_standard_resolution_url())
+        for media in liked_media:
+            photos.append('<div style="float:left;">')
             if(media.type == 'video'):
                 photos.append('<video controls width height="150"><source type="video/mp4" src="%s"/></video>' % (media.get_standard_resolution_url()))
             else:
-                photos.append('<img src="%s"/>' % (media.get_standard_resolution_url())
-	counter = 1
-        while next and counter < 3:
-            media_feed, next = api.user_media_feed(with_next_url=next)
-            for media in media_feed:
-                photos.append('<img src="%s"/>' % media.get_standard_resolution_url())
-            counter += 1
+                photos.append('<img src="%s"/>' % (media.get_low_resolution_url()))
+            photos.append("<br/> <a href='/media_like/%s'>Like</a>  <a href='/media_unlike/%s'>Un-Like</a>  LikesCount=%s</div>" % (media.id,media.id,media.like_count))
         content += ''.join(photos)
     except Exception as e:
         print(e)
