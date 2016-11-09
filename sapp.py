@@ -32,7 +32,7 @@ def user_likes():
         return 'Missing Access Token'
     try:
         api = client.InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
-        media_feed, next = api.user_liked_feed()
+        media_feed, next = api.user_liked_media()
         photos = []
         for media in liked_media:
             photos.append('<div style="float:left;">')
