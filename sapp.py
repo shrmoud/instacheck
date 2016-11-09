@@ -44,7 +44,7 @@ def home():
 @route('/liked')
 def user_likes():
     content = "<h2>User Liked Media</h2>"
-    access_token = request.session['access_token']
+    access_token = '3034913826.1677ed0.ad37bc63b4b145b3aea55b699d8885d2'
     if not access_token:
         return 'Missing Access Token'
     try:
